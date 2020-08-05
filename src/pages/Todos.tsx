@@ -1,50 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
+import { Context } from '../context';
 import { ITodo } from '../interfaces/todo';
 
-declare var confirm: (question: string) => boolean;
-
-function Todos() {
-  const [todos, setTodos] = useState<ITodo[]>([]);
-
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('todos') || '[]') as ITodo[];
-
-    setTodos(saved);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
-
-  const addHandler = (title: string) => {
-    const newTodo: ITodo = {
-      title: title,
-      id: Date.now(),
-      completed: false,
-    };
-    setTodos((prevState) => [newTodo, ...prevState]);
-  };
-
-  const toggleHandler = (id: number) => {
-    setTodos((prevState) =>
-      prevState.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed;
-        }
-        return todo;
-      })
-    );
-  };
-
-  const removeHandler = (id: number) => {
-    const shouldRemove = confirm('Are you sure you want to remove the item?');
-    if (shouldRemove) {
-      setTodos((prevState) => prevState.filter((todo) => todo.id !== id));
-    }
-  };
+function Todos(todos: ITodo[]) {
+  const { addHandler, toggleHandler, removeHandler, state } = useContext(
+    Context
+  );
 
   return (
     <React.Fragment>
@@ -60,7 +24,7 @@ function Todos() {
         </Typography>
         <TodoForm onAdd={addHandler} />
         <TodoList
-          todos={todos}
+          todos={state}
           onToggle={toggleHandler}
           onRemove={removeHandler}
         />
