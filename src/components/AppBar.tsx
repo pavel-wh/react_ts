@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    link: {
+      color: 'white',
+      textDecoration: 'none',
+    },
   })
 );
 
@@ -27,10 +32,18 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="h1" className={classes.title}>
-            ToDo
+            <NavLink to="/" className={classes.link}>
+              ToDo
+            </NavLink>
           </Typography>
-          <Button color="inherit">ToDo List</Button>
-          <Button color="inherit">Info</Button>
+          <Button color="inherit">
+            <NavLink to="/" className={classes.link}>
+              ToDo List
+            </NavLink>
+          </Button>
+          <NavLink to="/about" className={classes.link}>
+            <Button color="inherit">Info</Button>
+          </NavLink>
         </Toolbar>
       </AppBar>
     </div>
