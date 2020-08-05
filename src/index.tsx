@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// Load Roboto face
+import 'fontsource-roboto';
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
